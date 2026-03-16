@@ -337,9 +337,13 @@
           status.innerText = "Token generated successfully.";
         } catch (err) {
           status.style.color = "#b91c1c";
-          status.innerText = `Token generation failed: ${err.message}`;
+          const message =
+            err.message && err.message !== ""
+              ? err.message
+              : "Invalid site key or connection issue.";
+          status.innerText = `Token generation failed: ${message}`;
           console.error("Token generation error", err);
-          alert(`Token generation failed: ${err.message}`);
+          alert(`Token generation failed: ${message}`);
         } finally {
           generateBtn.disabled = false;
           generateBtn.innerText = "Generate New Token";
@@ -384,9 +388,17 @@
         try {
           const response = await fetch(googleUrl, {
             method: "POST",
+            mode: "cors",
+            credentials: "omit",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `secret=${secret}&response=${token}`,
           });
+
+          if (!response.ok) {
+            throw new Error(
+              `Google verify request failed: ${response.status} ${response.statusText}`,
+            );
+          }
 
           const data = await response.json();
           verifyText.innerText = JSON.stringify(data, null, 2);
@@ -395,7 +407,11 @@
             : "result-panel error";
         } catch (err) {
           verifyArea.className = "result-panel error";
-          verifyText.innerText = "Error: " + err.message;
+          const isCors =
+            err.message && err.message.toLowerCase().includes("cors");
+          verifyText.innerText = isCors
+            ? "Error: CORS blocked this request. Use a server endpoint or proxy for /siteverify."
+            : "Error: " + err.message;
         }
       }
     </script>
