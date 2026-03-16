@@ -2,6 +2,8 @@
 
 A simple local static tester for Google reCAPTCHA v3.
 
+✅ Live demo: https://thyashley.github.io/google-captcha-v3-tester/
+
 ## What is this about?
 
 This project is a single-page static app (`index.html`) that lets you:
