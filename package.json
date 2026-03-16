@@ -1,0 +1,11 @@
+{
+  "name": "google-captcha-v3-tester",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A simple local tester for Google reCAPTCHA v3 token generation and verification.",
+  "scripts": {
+    "start": "open http://localhost:8080"
+  },
+  "author": "",
+  "license": "MIT"
+}
