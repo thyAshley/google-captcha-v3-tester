@@ -379,12 +379,10 @@
         verifyArea.className = "result-panel";
         verifyText.innerText = "Connecting to Google...";
 
-        // CORS Proxy for browser-based testing
-        const proxy = "https://corsproxy.io/?";
         const googleUrl = "https://www.google.com/recaptcha/api/siteverify";
 
         try {
-          const response = await fetch(proxy + encodeURIComponent(googleUrl), {
+          const response = await fetch(googleUrl, {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `secret=${secret}&response=${token}`,
